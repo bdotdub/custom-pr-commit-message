@@ -1,0 +1,23 @@
+on:
+  pull_request:
+    types: [ closed ]
+
+jobs:
+  update_merge_commit_message:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: 'main'
+        fetch-depth: 2
+    - name: Rewrite commit alt
+      env:
+        TITLE: ${{github.event.pull_request.title}}
+        NUMBER: ${{github.event.pull_request.number}}
+        URL: ${{github.event.pull_request._links.self.href}}
+        BODY: ${{github.event.pull_request.body}}
+        SHA: ${{github.event.pull_request.merge_commit_sha}}
+      run: |
+        ./.github/scripts/rewrite-pr-commit.sh
