@@ -10,7 +10,7 @@ jobs:
       run: echo '${{ toJson(github) }}'
 
   update_merge_commit_message:
-    if: ${{github.event.issue.pull_request && github.event.body }}
+    if: ${{github.event.issue.pull_request && contains(github.event.comment.body, '#merge-it') }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
