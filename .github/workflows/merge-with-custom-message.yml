@@ -3,8 +3,14 @@ on:
     types: created
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Debug
+      run: echo '${{ toJson(github) }}'
+
   update_merge_commit_message:
-    if: github.event.issue.pull_request
+    if: ${{github.event.issue.pull_request && github.event.body }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
