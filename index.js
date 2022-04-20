@@ -3,7 +3,11 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
-    console.log(process.env, getInput('github-token'))
+  if (!context.payload.comment.body.includes(getInput('trigger-phrase'))) {
+        console.log('Comment does not contain trigger phrase');
+        return;
+    }
+
     const octokit = getOctokit(getInput('github-token'));
 
     console.log("Fetching pull request");
