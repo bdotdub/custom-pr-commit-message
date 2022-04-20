@@ -1,7 +1,5 @@
 import { getInput, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
-
-import { Octokit } from "@octokit/rest";
 import { default as Mustache } from 'mustache';
 
 
