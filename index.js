@@ -1,17 +1,17 @@
 import { setFailed } from '@actions/core';
-import { context, getOctokit } from '@actions/github';
+import { context.payload, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
-    console.log(context)
+    console.log(context.payload)
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
     console.log("Fetching pull request");
 
     const { data: pullRequest } = await octokit.rest.pulls.get({
-        owner: context.repository.owner.login,
-        repo: context.repository.name,
-        pull_number: context.issue.number,
+        owner: context.payload.repository.owner.login,
+        repo: context.payload.repository.name,
+        pull_number: context.payload.issue.number,
     });
     console.log(`Received: ${pullRequest.title} (#${pullRequest.number})`);
 
@@ -25,9 +25,9 @@ async function run() {
     console.log("About to merge")
 
     await octokit.rest.pulls.merge({
-        owner: context.repository.owner.login,
-        repo: context.repository.name,
-        pull_number: context.issue.number,
+        owner: context.payload.repository.owner.login,
+        repo: context.payload.repository.name,
+        pull_number: context.payload.issue.number,
         commit_message: output,
         merge_method: 'squash',
     });
