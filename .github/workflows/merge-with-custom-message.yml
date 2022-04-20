@@ -16,6 +16,7 @@ jobs:
     - name: Merge Script
       id: merge-script
       uses: bdotdub/custom-pr-commit-message@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        trigger-phrase: "yolo"
 
