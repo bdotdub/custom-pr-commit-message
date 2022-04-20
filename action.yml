@@ -1,9 +1,5 @@
 name: 'Custom PR Merge Message'
 description: 'Allows for custom PR merge messages'
-inputs:
-  repo-token:
-    description: "Github Token"
-    required: true
 runs:
   using: 'node16'
   main: 'index.js'

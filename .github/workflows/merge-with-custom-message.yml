@@ -16,6 +16,4 @@ jobs:
     - name: Merge Script
       id: merge-script
       uses: bdotdub/custom-pr-commit-message@main
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
 
