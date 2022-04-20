@@ -3,6 +3,7 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
+    console.log(context)
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
     console.log("Fetching pull request");
