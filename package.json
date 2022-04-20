@@ -3,6 +3,5 @@
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.1",
     "mustache": "^4.2.0"
-  },
-  "type": "module"
+  }
 }
