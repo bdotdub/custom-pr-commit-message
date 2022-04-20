@@ -13,11 +13,6 @@ jobs:
     if: ${{github.event.issue.pull_request && contains(github.event.comment.body, '#merge-it') }}
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        ref: 'main'
-        fetch-depth: 20
     - name: Merge Script
       id: merge-script
       uses: bdotdub/custom-pr-commit-message@main

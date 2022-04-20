@@ -3,5 +3,25 @@
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.1",
     "mustache": "^4.2.0"
-  }
+  },
+  "type": "module",
+  "name": "custom-pr-commit-message",
+  "description": "A GitHub action that updates a PR merge commit with more useful PR info",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdotdub/custom-pr-commit-message.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bdotdub/custom-pr-commit-message/issues"
+  },
+  "homepage": "https://github.com/bdotdub/custom-pr-commit-message#readme"
 }
