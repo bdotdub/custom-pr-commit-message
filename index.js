@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
-  if (!context.payload.comment.body.includes(getInput('trigger-phrase'))) {
+    if (!context.payload.comment.body.includes(getInput('trigger-phrase'))) {
         console.log('Comment does not contain trigger phrase');
         return;
     }
