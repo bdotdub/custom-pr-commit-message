@@ -1,10 +1,10 @@
-import { setFailed } from '@actions/core';
+import { getInput, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
-    console.log(context.payload)
-    const octokit = getOctokit(process.env.GITHUB_TOKEN);
+    console.log(process.env, getInput('github-token'))
+    const octokit = getOctokit(getInput('github-token'));
 
     console.log("Fetching pull request");
 
