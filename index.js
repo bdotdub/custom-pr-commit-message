@@ -1,5 +1,5 @@
 import { setFailed } from '@actions/core';
-import { context.payload, getOctokit } from '@actions/github';
+import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
