@@ -3,12 +3,11 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function run() {
-    console.log(context, process.env.GITHUB_TOKEN)
     const octokit = getOctokit(process.env.GITHUB_TOKEN);
 
     console.log("Fetching pull request");
 
-    const { data: pullRequest } = await octokit.pulls.get({
+    const { data: pullRequest } = await octokit.rest.pulls.get({
         owner: context.repository.owner.login,
         repo: context.repository.name,
         pull_number: context.issue.number,
@@ -24,7 +23,7 @@ async function run() {
 
     console.log("About to merge")
 
-    await octokit.pulls.merge({
+    await octokit.rest.pulls.merge({
         owner: context.repository.owner.login,
         repo: context.repository.name,
         pull_number: context.issue.number,
