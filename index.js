@@ -2,7 +2,6 @@ import { getInput, setFailed } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
-
 async function run() {
     const githubToken = getInput('repo-token ', { required: true });
     const octokit = getOctokit(githubToken);
