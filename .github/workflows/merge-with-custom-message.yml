@@ -18,12 +18,9 @@ jobs:
       with:
         ref: 'main'
         fetch-depth: 20
-    - name: Rewrite commit alt
-      env:
-        TITLE: ${{github.event.issue.pull_request.title}}
-        NUMBER: ${{github.event.issue.pull_request.number}}
-        URL: ${{github.event.issue.pull_request._links.self.href}}
-        BODY: ${{github.event.issue.pull_request.body}}
-        SHA: ${{github.event.issue.pull_request.merge_commit_sha}}
-      run: |
-        ./.github/scripts/merge-pr-with-custom-message.sh
+    - name: Merge Script
+      id: merge-script
+      uses: bdotdub/custom-pr-commit-message
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
