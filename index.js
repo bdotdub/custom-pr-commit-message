@@ -32,13 +32,13 @@ async function merge(octokit, trigger_phrase) {
         pull_number: context.payload.issue.number,
     });
 
-    const approvals = reviews.data.filter(review => review.state === 'APPROVED');
-    if (approvals.length === 0) {
-        console.log(`Pull request does not have any approvals, not merging`);
-        setOutput("merged", false);
-        // TODO: Comment on the pull request that it is not approved
-        return;
-    }
+    // const approvals = reviews.data.filter(review => review.state === 'APPROVED');
+    // if (approvals.length === 0) {
+    //     console.log(`Pull request does not have any approvals, not merging`);
+    //     setOutput("merged", false);
+    //     // TODO: Comment on the pull request that it is not approved
+    //     return;
+    // }
 
     // Check PR checks
     const checks = await octokit.rest.checks.listSuitesForRef({
@@ -126,7 +126,6 @@ try {
         default:
             throw new Error(`Unknown action: ${action}`);
     }
-    run()
 } catch (error) {
     setFailed(error.message);
 }
