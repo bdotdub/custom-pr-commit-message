@@ -105,6 +105,9 @@ async function merge(octokit, pullRequestIdentifiable, trigger_phrase) {
   // If everything looks good, let's generate the message
   const mergeCommitMessage = await renderCommitMessage(pullRequest);
 
+  // Temp for debug
+  return;
+
   // Now merge it!
   const response = await octokit.rest.pulls.merge({
     owner: context.payload.repository.owner.login,
