@@ -15,6 +15,7 @@ async function isApproved(pullRequest) {
   });
 
   const approvals = reviews.filter((review) => review.state === "APPROVED");
+  console.log(reviews, approvals);
   if (approvals.length === 0) {
     return false;
   }
