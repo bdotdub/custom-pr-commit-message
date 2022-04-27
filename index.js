@@ -47,6 +47,8 @@ async function merge(octokit, trigger_phrase) {
         ref: pullRequest.head.sha
     });
 
+    console.log(checks)
+
     const failed_checks = checks.check_suites.filter(check => {
         return (
             check.status === 'completed'
