@@ -4,7 +4,7 @@ import { default as Mustache } from 'mustache';
 
 async function merge(octokit, trigger_phrase) {
     if (!context.payload.comment.body.includes(trigger_phrase)) {
-        console.log('Comment does not contain trigger phrase');
+        console.log(`Comment does not contain trigger phrase: ${trigger_phrase}`);
         return;
     }
 
