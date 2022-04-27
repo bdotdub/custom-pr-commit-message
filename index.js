@@ -3,6 +3,12 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function merge(octokit, trigger_phrase) {
+    if (!trigger_phrase || triggerPhrase.length === 0) {
+        console.log('No trigger phrase specified');
+        setOutput("merged", false);
+        return;
+    }
+
     console.log(`Checking trigger phrase: ${trigger_phrase}, ${context.payload.comment.body}`);
     if (!context.payload.comment.body.includes(trigger_phrase)) {
         setOutput("merged", false);
@@ -114,7 +120,7 @@ async function delete_merged_branch(octokit) {
 }
 
 const action = getInput('action');
-const triggerPhrase = getInput('trigger_phrase');
+const triggerPhrase = getInput('trigger-phrase');
 const octokit = getOctokit(getInput('github-token'));
 
 try {
