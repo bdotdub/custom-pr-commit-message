@@ -24,7 +24,7 @@ jobs:
       merged: ${{ steps.merge-script.outputs.merged }}
 
   delete_branch:
-    if: ${{ needs.merge_pr.outputs.merged }}
+    if: ${{ needs.merge_pr.outputs.merged == "true" }}
     needs: merge_pr
     runs-on: ubuntu-latest
     steps:
