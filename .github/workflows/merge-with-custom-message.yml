@@ -6,31 +6,33 @@ jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
-    - name: Debug
-      run: echo '${{ toJson(github) }}'
+      - name: Debug
+        run: echo '${{ toJson(github) }}'
 
   merge_pr:
     if: ${{github.event.issue.pull_request}}
     runs-on: ubuntu-latest
     steps:
-    - name: Merge Script
-      id: merge-script
-      uses: bdotdub/custom-pr-commit-message@main
-      with:
-        action: merge
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        trigger-phrase: "#merge"
+      - name: Merge Script
+        id: merge-script
+        uses: bdotdub/custom-pr-commit-message@main
+        with:
+          action: merge
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          trigger-phrase: "#merge"
     outputs:
-      merged: ${{ steps.merge-script.outputs.merged }} 
+      merged: ${{ steps.merge-script.outputs.merged }}
 
   delete_branch:
     if: ${{ needs.merge_pr.outputs.merged == true }}
     needs: merge_pr
     runs-on: ubuntu-latest
     steps:
-    - name: Delete Branch
-      id: delete-branch
-      uses: bdotdub/custom-pr-commit-message@main
-      with:
-        action: delete
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug
+        run: echo '${{ toJson(needs) }}'
+      - name: Delete Branch
+        id: delete-branch
+        uses: bdotdub/custom-pr-commit-message@main
+        with:
+          action: delete
+          github-token: ${{ secrets.GITHUB_TOKEN }}
