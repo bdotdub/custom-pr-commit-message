@@ -83,19 +83,19 @@ async function merge(octokit, pullRequestIdentifiable, trigger_phrase) {
   console.log(`Received: ${pullRequest.title} (#${pullRequest.number})`);
 
   // Run through the checks
-  if (!isMergeable(pullRequest)) {
+  if (!(await isMergeable(pullRequest))) {
     console.log(`Pull request is not mergeable, not merging`);
     setOutput("merged", false);
     return;
   }
   console.log(`Pull request is mergeable`);
-  if (!isApproved(pullRequest)) {
+  if (!(await isApproved(pullRequest))) {
     console.log(`Pull request does not have any approvals, not merging`);
     setOutput("merged", false);
     return;
   }
   console.log(`Pull request has approvals`);
-  if (!haveChecksPassed(pullRequest)) {
+  if (!(await haveChecksPassed(pullRequest))) {
     console.log(`Some checks have failed. Not merging`);
     setOutput("merged", false);
     return;
