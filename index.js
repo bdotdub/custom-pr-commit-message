@@ -87,16 +87,19 @@ async function merge(octokit, pullRequestIdentifiable, trigger_phrase) {
     setOutput("merged", false);
     return;
   }
+  console.log(`Pull request is mergeable`);
   if (!isApproved(pullRequest)) {
     console.log(`Pull request does not have any approvals, not merging`);
     setOutput("merged", false);
     return;
   }
+  console.log(`Pull request has approvals`);
   if (!haveChecksPassed(pullRequest)) {
     console.log(`Some checks have failed. Not merging`);
     setOutput("merged", false);
     return;
   }
+  console.log(`Pull request checks have passed`);
 
   // If everything looks good, let's generate the message
   const mergeCommitMessage = await renderCommitMessage(pullRequest);
