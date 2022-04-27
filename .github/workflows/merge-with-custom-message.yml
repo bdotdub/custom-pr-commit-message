@@ -9,7 +9,7 @@ jobs:
     - name: Debug
       run: echo '${{ toJson(github) }}'
 
-  update_merge_commit_message:
+  merge_pr:
     if: ${{github.event.issue.pull_request}}
     runs-on: ubuntu-latest
     steps:
@@ -17,6 +17,20 @@ jobs:
       id: merge-script
       uses: bdotdub/custom-pr-commit-message@main
       with:
+        action: merge
         github-token: ${{ secrets.GITHUB_TOKEN }}
         trigger-phrase: "#merge"
+    outputs:
+      merged: ${{ merge_pr.merge-script.outputs.merged }} 
 
+  delete_branch:
+    if: ${{ needs.merge_pr.outputs.merged }}
+    needs: merge_pr
+    runs-on: ubuntu-latest
+    steps:
+    - name: Delete Branch
+      id: delete-branch
+      uses: bdotdub/custom-pr-commit-message@main
+      with:
+        action: delete
+        github-token: ${{ secrets.GITHUB_TOKEN }}

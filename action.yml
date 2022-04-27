@@ -6,7 +6,15 @@ inputs:
     required: true
   trigger-phrase:
     description: "Phrase that will trigger the merge"
-    required: true
+    required: false
+    default: "#merge"
+  action:
+    description: "Phrase that will trigger the merge"
+    required: false
+    default: merge
+outputs:
+  merged:
+
 runs:
   using: 'node16'
   main: 'index.js'
