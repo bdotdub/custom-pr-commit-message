@@ -4,7 +4,7 @@ import { default as Mustache } from 'mustache';
 
 async function merge(octokit, trigger_phrase) {
     if (!context.payload.comment.body.includes(trigger_phrase)) {
-        console.log(`Comment does not contain trigger phrase: ${trigger_phrase}`);
+        console.log(`Comment does not contain trigger phrase: ${trigger_phrase}, ${context.payload.comment.body}`);
         return;
     }
 
@@ -108,12 +108,13 @@ async function delete_merged_branch(octokit) {
 }
 
 const action = getInput('action');
+const triggerPhrase = getInput('trigger_phrase');
 const octokit = getOctokit(getInput('github-token'));
 
 try {
     switch (action) {
         case 'merge':
-            merge(octokit);
+            merge(octokit, triggerPhrase);
             break;
         case 'delete':
             delete_merged_branch(octokit);
