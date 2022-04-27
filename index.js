@@ -1,4 +1,4 @@
-import { getInput, setFailed } from '@actions/core';
+import { getInput, setFailed, setOutput } from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
@@ -66,13 +66,21 @@ async function merge(octokit, trigger_phrase) {
 
     console.log("About to merge")
 
-    await octokit.rest.pulls.merge({
+    const response = await octokit.rest.pulls.merge({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         pull_number: context.payload.issue.number,
         commit_message: output,
         merge_method: 'squash',
     });
+
+    if (response.status == 200) {
+        console.log("Merge successful");
+        setOutput('merged', true);
+    } else {
+        setOutput('merged', false);
+        setFailed(`Merge failed with status ${response.status}`);
+    }
 }
 
 async function delete_merged_branch(octokit) {
