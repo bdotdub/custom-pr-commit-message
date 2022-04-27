@@ -5,6 +5,7 @@ import { default as Mustache } from 'mustache';
 async function merge(octokit, trigger_phrase) {
     if (!context.payload.comment.body.includes(trigger_phrase)) {
         console.log(`Comment does not contain trigger phrase: ${trigger_phrase}, ${context.payload.comment.body}`);
+        setOutput("merged", false);
         return;
     }
 
@@ -20,6 +21,7 @@ async function merge(octokit, trigger_phrase) {
     if (!pullRequest.mergeable) {
         console.log(`Pull request is not mergeable, not merging`);
         // TODO: Comment on the pull request that it is not mergeable
+        setOutput("merged", false);
         return;
     }
 
@@ -33,6 +35,7 @@ async function merge(octokit, trigger_phrase) {
     const approvals = reviews.data.filter(review => review.state === 'APPROVED');
     if (approvals.length === 0) {
         console.log(`Pull request does not have any approvals, not merging`);
+        setOutput("merged", false);
         // TODO: Comment on the pull request that it is not approved
         return;
     }
@@ -53,6 +56,7 @@ async function merge(octokit, trigger_phrase) {
 
     if (failed_checks.length > 0) {
         console.log(`Some checks have failed. Not merging`);
+        setOutput("merged", false);
         // TODO: Comment on the pull request that there are failed checks
         return;
     }
