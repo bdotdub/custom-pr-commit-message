@@ -26,13 +26,13 @@ async function merge(octokit, trigger_phrase) {
     }
 
     // Check whether there are approvals
-    const reviews = await octokit.rest.pulls.listReviews({
+    const { data: reviews } = await octokit.rest.pulls.listReviews({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         pull_number: context.payload.issue.number,
     });
 
-    // const approvals = reviews.data.filter(review => review.state === 'APPROVED');
+    // const approvals = reviews.filter(review => review.state === 'APPROVED');
     // if (approvals.length === 0) {
     //     console.log(`Pull request does not have any approvals, not merging`);
     //     setOutput("merged", false);
@@ -41,7 +41,7 @@ async function merge(octokit, trigger_phrase) {
     // }
 
     // Check PR checks
-    const checks = await octokit.rest.checks.listSuitesForRef({
+    const { data: checks } = await octokit.rest.checks.listSuitesForRef({
         owner: context.payload.repository.owner.login,
         repo: context.payload.repository.name,
         ref: pullRequest.head.sha
