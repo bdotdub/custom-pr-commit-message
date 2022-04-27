@@ -16,11 +16,10 @@ async function isApproved(pullRequest) {
 
   const approvals = reviews.filter((review) => review.state === "APPROVED");
   if (approvals.length === 0) {
-    console.log(`Pull request does not have any approvals, not merging`);
-    setOutput("merged", false);
-    // TODO: Comment on the pull request that it is not approved
-    return;
+    return false;
   }
+
+  return true;
 }
 
 async function haveChecksPassed(pullRequest) {
@@ -38,11 +37,11 @@ async function haveChecksPassed(pullRequest) {
   });
 
   if (failed_checks.length > 0) {
-    console.log(`Some checks have failed. Not merging`);
-    setOutput("merged", false);
     // TODO: Comment on the pull request that there are failed checks
-    return;
+    return false;
   }
+
+  return true;
 }
 
 async function renderCommitMessage(pullRequest) {
@@ -83,9 +82,21 @@ async function merge(octokit, pullRequestIdentifiable, trigger_phrase) {
   console.log(`Received: ${pullRequest.title} (#${pullRequest.number})`);
 
   // Run through the checks
-  isMergeable(pullRequest);
-  isApproved(pullRequest);
-  haveChecksPassed(pullRequest);
+  if (!isMergeable(pullRequest)) {
+    console.log(`Pull request is not mergeable, not merging`);
+    setOutput("merged", false);
+    return;
+  }
+  if (!isApproved(pullRequest)) {
+    console.log(`Pull request does not have any approvals, not merging`);
+    setOutput("merged", false);
+    return;
+  }
+  if (!haveChecksPassed(pullRequest)) {
+    console.log(`Some checks have failed. Not merging`);
+    setOutput("merged", false);
+    return;
+  }
 
   // If everything looks good, let's generate the message
   const mergeCommitMessage = await renderCommitMessage(pullRequest);
