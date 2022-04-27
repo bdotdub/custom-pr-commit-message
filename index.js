@@ -3,8 +3,8 @@ import { context, getOctokit } from '@actions/github';
 import { default as Mustache } from 'mustache';
 
 async function merge(octokit, trigger_phrase) {
+    console.log(`Checking trigger phrase: ${trigger_phrase}, ${context.payload.comment.body}`);
     if (!context.payload.comment.body.includes(trigger_phrase)) {
-        console.log(`Comment does not contain trigger phrase: ${trigger_phrase}, ${context.payload.comment.body}`);
         setOutput("merged", false);
         return;
     }
