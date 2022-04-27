@@ -14,6 +14,7 @@ inputs:
     default: merge
 outputs:
   merged:
+    description: "Boolean for whether it was merged or not"
 
 runs:
   using: 'node16'
