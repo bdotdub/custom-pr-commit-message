@@ -21,7 +21,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         trigger-phrase: "#merge"
     outputs:
-      merged: ${{ merge_pr.merge-script.outputs.merged }} 
+      merged: ${{ steps.merge-script.outputs.merged }} 
 
   delete_branch:
     if: ${{ needs.merge_pr.outputs.merged }}
